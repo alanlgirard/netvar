@@ -83,7 +83,7 @@ export const client = (endpoint: string = '255.255.255.255', port: number = 1202
   const list = <T extends { [k: string]: t.Types }>(options: Options, vars: T): Return<T> => {
     const { listId, onChange, cyclic, cycleInterval } = options
     const nodeId = '002d5333'
-
+    const listIdPadded = listId.toString(16).padStart(2, '0');
     let state = { ...vars }
     let cycleIntervalTimer: NodeJS.Timeout | undefined = undefined
     if (cyclic) {
@@ -123,7 +123,7 @@ export const client = (endpoint: string = '255.255.255.255', port: number = 1202
           }
         })
         .map(({ idx, lng, counter, data }) =>
-          Buffer.from(`${nodeId}000000000${listId}000${idx}000100${lng}${counter}${data}`, 'hex'),
+          Buffer.from(`${nodeId}00000000${listIdPadded}000${idx}000100${lng}${counter}${data}`, 'hex'),
         )
         // .map((a) => {
         //   console.log(a.toString('hex'))
